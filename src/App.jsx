@@ -1,11 +1,12 @@
-import TodoCounter from "./components/TodoCounter/TodoCounter"
-import CreateTodoButton from "./components/CreateTodoButton/CreateTodoButton"
-import TodoList from "./components/TodoList/TodoList"
-import TodoItem from "./components/TodoItem/TodoItem"
+import TodoCounter from './components/TodoCounter/TodoCounter'
+import CreateTodoButton from './components/CreateTodoButton/CreateTodoButton'
+import TodoList from './components/TodoList/TodoList'
+import TodoItem from './components/TodoItem/TodoItem'
 
-import "./App.css"
-import TodoSearch from "./components/TodoSearch/TodoSearch"
-import { useState } from "react"
+import './App.css'
+import TodoSearch from './components/TodoSearch/TodoSearch'
+import { useState } from 'react'
+import { useLocalStorage } from './components/TodoCounter/useLocalStorage'
 
 // const defaultTodos = [
 //   { text: "Cortar cebolla", completed: true },
@@ -14,38 +15,27 @@ import { useState } from "react"
 // ]
 
 function App() {
-  const localStorageTodos = localStorage.getItem("TODOS_V1")
-  let parsedTodos
-
-  if (!localStorageTodos) {
-    localStorage.setItem("TODOS_V1", JSON.stringify([]))
-    parsedTodos = []
-  } else {
-    parsedTodos = JSON.parse(localStorageTodos)
-  }
-
-  const [todos, setTodos] = useState(parsedTodos)
-  const [searchValue, setSearchValue] = useState("")
+  const {
+    item: todos,
+    saveItem: saveTodos,
+    loading,
+    error,
+  } = useLocalStorage('TODOS_V1', [])
+  const [searchItem, setSearchItem] = useState('')
 
   const completedTodos = todos.filter((todos) => !!todos.completed).length
   const totalTodos = todos.length
 
   let searchedTodos = []
 
-  if (!searchValue.length >= 1) {
+  if (!searchItem.length >= 1) {
     searchedTodos = todos
   } else {
     searchedTodos = todos.filter((todo) => {
       const todoText = todo.text.toLowerCase()
-      const searchText = searchValue.toLowerCase()
+      const searchText = searchItem.toLowerCase()
       return todoText.includes(searchText)
     })
-  }
-
-  const saveTodos = (newTodos) => {
-    const stringifiedTodos = JSON.stringify(newTodos)
-    localStorage.setItem("TODOS_V1", stringifiedTodos)
-    setTodos(newTodos)
   }
 
   const completeTodo = (text) => {
@@ -65,8 +55,11 @@ function App() {
   return (
     <>
       <TodoCounter total={totalTodos} completed={completedTodos} />
-      <TodoSearch searchValue={searchValue} setSearchValue={setSearchValue} />
+      <TodoSearch searchItem={searchItem} setSearchItem={setSearchItem} />
       <TodoList>
+        {error && <p>Nope, hubo un error</p>}
+        {loading && <p>Cargando ando...</p>}
+        {!loading && !searchedTodos.length && <p>Crea tu primer todo</p>}
         {searchedTodos.map((todo) => (
           <TodoItem
             key={todo.text}
