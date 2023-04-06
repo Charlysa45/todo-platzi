@@ -1,47 +1,13 @@
-import { useState } from 'react'
-import { useLocalStorage } from './useLocalStorage'
+import { useContext } from "react"
 
-import './TodoCounter.css'
-const TodoCounter = ({ total, completed }) => {
-  const {
-    item: todos,
-    saveItem: saveTodos,
-    loading,
-    error,
-  } = useLocalStorage('TODOS_V1', [])
-  const [searchItem, setSearchItem] = useState('')
+import "./TodoCounter.css"
+import { TodoContext } from "../../TodoContext"
+const TodoCounter = () => {
+  const { totalTodos, completedTodos } = useContext(TodoContext)
 
-  const completedTodos = todos.filter((todos) => !!todos.completed).length
-  const totalTodos = todos.length
-
-  let searchedTodos = []
-
-  if (!searchItem.length >= 1) {
-    searchedTodos = todos
-  } else {
-    searchedTodos = todos.filter((todo) => {
-      const todoText = todo.text.toLowerCase()
-      const searchText = searchItem.toLowerCase()
-      return todoText.includes(searchText)
-    })
-  }
-
-  const completeTodo = (text) => {
-    const todoIndex = todos.findIndex((todo) => todo.text === text)
-    const newTodos = [...todos]
-    newTodos[todoIndex].completed = true
-    saveTodos(newTodos)
-  }
-
-  const deleteTodo = (text) => {
-    const todoIndex = todos.findIndex((todo) => todo.text === text)
-    const newTodos = [...todos]
-    newTodos.splice(todoIndex, 1)
-    saveTodos(newTodos)
-  }
   return (
     <h2 className="TodoCounter">
-      Has completado {completed} de {total}
+      Has completado {completedTodos} de {totalTodos}
     </h2>
   )
 }

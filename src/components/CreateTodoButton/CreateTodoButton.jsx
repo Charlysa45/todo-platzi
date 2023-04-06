@@ -1,7 +1,14 @@
-import './CreateTodoButton.css'
+import "./CreateTodoButton.css"
 
-const CreateTodoButton = () => {
-  return <button className="CreateTodoButton" onClick={() => console.log("click")}>+</button>
+const CreateTodoButton = ({ setOpenModal }) => {
+  const onClickButton = () => {
+    setOpenModal((patata) => !patata)
+  }
+  return (
+    <button className="CreateTodoButton" onClick={onClickButton}>
+      +
+    </button>
+  )
 }
 
 export default CreateTodoButton
