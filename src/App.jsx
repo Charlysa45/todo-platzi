@@ -2,12 +2,15 @@ import TodoCounter from "./components/TodoCounter/TodoCounter"
 import CreateTodoButton from "./components/CreateTodoButton/CreateTodoButton"
 import TodoList from "./components/TodoList/TodoList"
 import TodoItem from "./components/TodoItem/TodoItem"
-
-import "./App.css"
-import TodoSearch from "./components/TodoSearch/TodoSearch"
 import { useContext } from "react"
 import { Modal } from "./components/Modal/Index"
 import { TodoContext } from "./TodoContext"
+import { TodoForm } from "./components/TodoForm"
+
+import "./App.css"
+import TodoSearch from "./components/TodoSearch/TodoSearch"
+import { LoadingTodos } from "./components/LoadingTodos"
+import { EmptyTodos } from "./components/EmptyTodos"
 
 function App() {
   const {
@@ -28,10 +31,10 @@ function App() {
     <>
       <TodoCounter total={totalTodos} completed={completedTodos} />
       <TodoSearch searchItem={searchItem} setSearchItem={setSearchItem} />
+      {!loading && !searchedTodos.length && <EmptyTodos />}
       <TodoList>
         {error && <p>Nope, hubo un error</p>}
-        {loading && <p>Cargando ando...</p>}
-        {!loading && !searchedTodos.length && <p>Crea tu primer todo</p>}
+        {loading && <LoadingTodos />}
         {searchedTodos.map((todo) => (
           <TodoItem
             key={todo.text}
@@ -45,7 +48,7 @@ function App() {
 
       {openModal && (
         <Modal>
-          <p>{searchedTodos[0]?.text}</p>
+          <TodoForm />
         </Modal>
       )}
 
