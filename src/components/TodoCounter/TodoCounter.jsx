@@ -1,7 +1,7 @@
 import { useContext } from "react"
 
 import "./TodoCounter.css"
-import { TodoContext } from "../../TodoContext"
+import { TodoContext } from "../../TodoContext/TodoContext"
 const TodoCounter = () => {
   const { totalTodos, completedTodos } = useContext(TodoContext)
 

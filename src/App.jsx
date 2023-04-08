@@ -4,7 +4,7 @@ import TodoList from "./components/TodoList/TodoList"
 import TodoItem from "./components/TodoItem/TodoItem"
 import { useContext } from "react"
 import { Modal } from "./components/Modal/Index"
-import { TodoContext } from "./TodoContext"
+import { TodoContext } from "./TodoContext/TodoContext"
 import { TodoForm } from "./components/TodoForm"
 
 import "./App.css"
