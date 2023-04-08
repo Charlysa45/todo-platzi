@@ -11,6 +11,7 @@ import "./App.css"
 import TodoSearch from "./components/TodoSearch/TodoSearch"
 import { LoadingTodos } from "./components/LoadingTodos"
 import { EmptyTodos } from "./components/EmptyTodos"
+import { ErrorTodos } from "./components/ErrorTodos"
 
 function App() {
   const {
@@ -33,7 +34,7 @@ function App() {
       <TodoSearch searchItem={searchItem} setSearchItem={setSearchItem} />
       {!loading && !searchedTodos.length && <EmptyTodos />}
       <TodoList>
-        {error && <p>Nope, hubo un error</p>}
+        {error && <ErrorTodos />}
         {loading && <LoadingTodos />}
         {searchedTodos.map((todo) => (
           <TodoItem

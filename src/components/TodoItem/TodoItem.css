@@ -32,13 +32,17 @@
     /* background-color: #CCC; */
   }
   
-  .Icon-check {
-    position: absolute;
-    left: 12px;
+  .Icon-check{
+    margin-left: 2vw;
   }
-
+  
   .Icon-check--active {
     color: #4caf50;
+  }
+  
+  .Icon-delete{
+    margin-right: 2vw;
+    font-size: 32px;
   }
   
   .Icon-delete:hover {

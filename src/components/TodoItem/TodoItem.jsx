@@ -1,19 +1,26 @@
+import { AiFillDelete, AiOutlineCheckCircle } from "react-icons/ai"
+
 import "./TodoItem.css"
+import { IconContext } from "react-icons"
 
 const TodoItem = (props) => {
   return (
     <li className="TodoItem">
-      <span
-        className={`Icon Icon-check ${props.completed && "icon-check--active"}`}
-        onClick={props.onComplete}
+      <IconContext.Provider
+        value={{
+          color: `${props.completed && "green"}`,
+          className: `Icon Icon-check`,
+        }}
       >
-        √
-      </span>
+        <span onClick={props.onComplete}>
+          <AiOutlineCheckCircle />
+        </span>
+      </IconContext.Provider>
       <p className={`TodoItem-p ${props.completed && "TodoItem-p--complete"}`}>
         {props.text}
       </p>
       <span className="Icon Icon-delete" onClick={props.onDelete}>
-        X
+        <AiFillDelete />
       </span>
     </li>
   )
