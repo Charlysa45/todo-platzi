@@ -2,9 +2,8 @@ import TodoCounter from "./components/TodoCounter/TodoCounter"
 import CreateTodoButton from "./components/CreateTodoButton/CreateTodoButton"
 import TodoList from "./components/TodoList/TodoList"
 import TodoItem from "./components/TodoItem/TodoItem"
-import { useContext } from "react"
 import { Modal } from "./components/Modal/Index"
-import { TodoContext } from "./TodoContext/TodoContext"
+import { useTodos } from "./hooks/useTodos"
 import { TodoForm } from "./components/TodoForm"
 
 import "./App.css"
@@ -12,6 +11,7 @@ import TodoSearch from "./components/TodoSearch/TodoSearch"
 import { LoadingTodos } from "./components/LoadingTodos"
 import { EmptyTodos } from "./components/EmptyTodos"
 import { ErrorTodos } from "./components/ErrorTodos"
+import { TodoHeader } from "./components/TodoHeader"
 
 function App() {
   const {
@@ -26,12 +26,15 @@ function App() {
     deleteTodo,
     openModal,
     setOpenModal,
-  } = useContext(TodoContext)
+    addTodo,
+  } = useTodos()
 
   return (
     <>
-      <TodoCounter total={totalTodos} completed={completedTodos} />
-      <TodoSearch searchItem={searchItem} setSearchItem={setSearchItem} />
+      <TodoHeader>
+        <TodoCounter total={totalTodos} completed={completedTodos} />
+        <TodoSearch searchItem={searchItem} setSearchItem={setSearchItem} />
+      </TodoHeader>
       {!loading && !searchedTodos.length && <EmptyTodos />}
       <TodoList>
         {error && <ErrorTodos />}
@@ -49,7 +52,7 @@ function App() {
 
       {openModal && (
         <Modal>
-          <TodoForm />
+          <TodoForm addTodo={addTodo} setOpenModal={setOpenModal} />
         </Modal>
       )}
 
