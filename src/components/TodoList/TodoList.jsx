@@ -1,7 +1,15 @@
 import "./TodoList.css"
 
-const TodoList = ({ children }) => {
-  return <ul>{children}</ul>
+const TodoList = (props) => {
+  return (
+    <section className="TodoLost-container">
+      {props.error && props.onError()}
+      {props.loading && props.onLoading()}
+      <ul>
+
+      </ul>
+    </section>
+  )
 }
 
 export default TodoList
