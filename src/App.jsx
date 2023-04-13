@@ -6,12 +6,14 @@ import { Modal } from "./components/Modal/Index"
 import { useTodos } from "./hooks/useTodos"
 import { TodoForm } from "./components/TodoForm"
 
-import "./App.css"
+import { TodoHeader } from "./components/TodoHeader"
 import TodoSearch from "./components/TodoSearch/TodoSearch"
 import { LoadingTodos } from "./components/LoadingTodos"
 import { EmptyTodos } from "./components/EmptyTodos"
 import { ErrorTodos } from "./components/ErrorTodos"
-import { TodoHeader } from "./components/TodoHeader"
+import { EmptySearchResults } from "./components/EmptySearchResults"
+
+import "./App.css"
 
 function App() {
   const {
@@ -31,19 +33,34 @@ function App() {
 
   return (
     <>
-      <TodoHeader>
+      <TodoHeader loading={loading}>
         <TodoCounter total={totalTodos} completed={completedTodos} />
         <TodoSearch searchItem={searchItem} setSearchItem={setSearchItem} />
       </TodoHeader>
 
-      <TodoList 
+      <TodoList
         error={error}
         loading={loading}
         searchedTodos={searchedTodos}
+        totalTodos={totalTodos}
+        searchItem={searchItem}
         onError={() => <ErrorTodos />}
         onLoading={() => <LoadingTodos />}
         onEmptyTodos={() => <EmptyTodos />}
-        render={todo => (
+        onEmptySearchResults={(searchItem) => (
+          <EmptySearchResults searchItem={searchItem} />
+        )}
+        // render={(todo) => (
+        //   <TodoItem
+        //     key={todo.text}
+        //     text={todo.text}
+        //     completed={todo.completed}
+        //     onComplete={() => completeTodo(todo.text)}
+        //     onDelete={() => deleteTodo(todo.text)}
+        //   />
+        // )}
+      >
+        {(todo) => (
           <TodoItem
             key={todo.text}
             text={todo.text}
@@ -52,9 +69,7 @@ function App() {
             onDelete={() => deleteTodo(todo.text)}
           />
         )}
-      />
-
-      
+      </TodoList>
 
       {/* <TodoList>
         {!loading && !searchedTodos.length && <EmptyTodos />}

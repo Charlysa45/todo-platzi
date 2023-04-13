@@ -1,6 +1,6 @@
 import "./TodoSearch.css"
 
-const TodoSearch = ({ searchItem, setSearchItem }) => {
+const TodoSearch = ({ searchItem, setSearchItem, loading }) => {
   const onSearchValueChange = (event) => {
     console.log(event.target.value)
     setSearchItem(event.target.value)
@@ -14,6 +14,7 @@ const TodoSearch = ({ searchItem, setSearchItem }) => {
         placeholder="Cebolla"
         value={searchItem}
         onChange={onSearchValueChange}
+        disabled={loading}
       />
     </>
   )
