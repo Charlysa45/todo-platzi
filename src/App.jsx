@@ -12,6 +12,7 @@ import { LoadingTodos } from "./components/LoadingTodos"
 import { EmptyTodos } from "./components/EmptyTodos"
 import { ErrorTodos } from "./components/ErrorTodos"
 import { EmptySearchResults } from "./components/EmptySearchResults"
+import { ChangeAlertWithStorageListener } from "./components/ChangeAlert"
 
 import "./App.css"
 
@@ -29,6 +30,7 @@ function App() {
     openModal,
     setOpenModal,
     addTodo,
+    sincronizeTodos,
   } = useTodos()
 
   return (
@@ -93,6 +95,7 @@ function App() {
       )}
 
       <CreateTodoButton setOpenModal={setOpenModal} />
+      <ChangeAlertWithStorageListener sincronize={sincronizeTodos} />
     </>
   )
 }
