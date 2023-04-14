@@ -1,20 +1,20 @@
-import TodoCounter from "./components/TodoCounter/TodoCounter"
-import CreateTodoButton from "./components/CreateTodoButton/CreateTodoButton"
-import TodoList from "./components/TodoList/TodoList"
-import TodoItem from "./components/TodoItem/TodoItem"
-import { Modal } from "./components/Modal/Index"
-import { useTodos } from "./hooks/useTodos"
-import { TodoForm } from "./components/TodoForm"
+import TodoCounter from './components/TodoCounter/TodoCounter'
+import CreateTodoButton from './components/CreateTodoButton/CreateTodoButton'
+import TodoList from './components/TodoList/TodoList'
+import TodoItem from './components/TodoItem/TodoItem'
+import { Modal } from './components/Modal/Index'
+import { useTodos } from './hooks/useTodos'
+import { TodoForm } from './components/TodoForm'
 
-import { TodoHeader } from "./components/TodoHeader"
-import TodoSearch from "./components/TodoSearch/TodoSearch"
-import { LoadingTodos } from "./components/LoadingTodos"
-import { EmptyTodos } from "./components/EmptyTodos"
-import { ErrorTodos } from "./components/ErrorTodos"
-import { EmptySearchResults } from "./components/EmptySearchResults"
-import { ChangeAlertWithStorageListener } from "./components/ChangeAlert"
+import { TodoHeader } from './components/TodoHeader'
+import TodoSearch from './components/TodoSearch/TodoSearch'
+import { LoadingTodos } from './components/LoadingTodos'
+import { EmptyTodos } from './components/EmptyTodos'
+import { ErrorTodos } from './components/ErrorTodos'
+import { EmptySearchResults } from './components/EmptySearchResults'
+import { ChangeAlert } from './components/ChangeAlert'
 
-import "./App.css"
+import './App.css'
 
 function App() {
   const {
@@ -95,7 +95,7 @@ function App() {
       )}
 
       <CreateTodoButton setOpenModal={setOpenModal} />
-      <ChangeAlertWithStorageListener sincronize={sincronizeTodos} />
+      <ChangeAlert sincronize={sincronizeTodos} />
     </>
   )
 }
