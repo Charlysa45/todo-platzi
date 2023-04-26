@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react"
+import { useEffect, useReducer } from "react"
 
 export function useLocalStorage(itemName, initialValue) {
-    const [sincronizedItem, setSicronizedItem] = useState(true)
-    const [error, setError] = useState(false)
-    const [loading, setLoading] = useState(true)
-    const [item, setItem] = useState(initialValue)
+    const [state, dispatch] = useReducer(reducer, initialState({initialValue}))
+    const {sincronizedItem, error, loading, item} = state
+
+    // ACTION CREATORS
+    const onError = (error) => dispatch({type: actionTypes.ERROR, payload: error})
+    const onSuccess = (item) => dispatch({type: actionTypes.SUCCESS, payload: item})
+    const onSave = (item) => dispatch({type: actionTypes.SAVE, payload: item})
+    const onSincronize = () => dispatch({type: actionTypes.SINCRONIZE})
+
     useEffect(() => {
       setTimeout(() => {
         try {
@@ -17,11 +22,9 @@ export function useLocalStorage(itemName, initialValue) {
           } else {
             parsedItem = JSON.parse(localStorageItem)
           }
-          setItem(parsedItem)
-          setLoading(false)
-          setSicronizedItem(true)
+          onSuccess(parsedItem)
         } catch (error) {
-          setError(error)
+          onError(error)
         }
       }, 3000)
     }, [sincronizedItem])
@@ -30,16 +33,56 @@ export function useLocalStorage(itemName, initialValue) {
       try {
         const stringifiedItem = JSON.stringify(newItem)
         localStorage.setItem(itemName, stringifiedItem)
-        setItem(newItem)
+        onSave(newItem)
       } catch (error) {
-        setError(error)
+        onError(error)
       }
     }
 
     const sincronizeItem = () => {
-      setLoading(true)
-      setSicronizedItem(false)
+      onSincronize()
     }
-  
+
     return { item, saveItem, loading, error, sincronizeItem }
+  }
+  
+  const initialState = ({initialValue}) => ({
+    sincronizedItem: true,
+    error: false,
+    loading: true,
+    item: initialValue
+  })
+
+  const actionTypes = {
+    ERROR: 'ERROR',
+    SUCCESS: 'SUCCESS',
+    SAVE: 'SAVE',
+    SINCRONIZE: 'SINCRONIZE',
+  }
+
+  const reducerObject = (state, payload) => ({
+    [actionTypes.ERROR]: {
+      ...state,
+      error: true
+    },
+    [actionTypes.SUCCESS]: {
+      ...state,
+      error: false,
+      loading: false,
+      sincronizedItem: true,
+      item: payload
+    },
+    [actionTypes.SAVE]: {
+      ...state, 
+      item: payload
+    },
+    [actionTypes.SINCRONIZE]: {
+      ...state,
+      sincronizedItem: false,
+      loading: true
+    }
+  })
+
+  const reducer = (state, action) => {
+    return reducerObject(state, action.payload)[action.type] || state
   }
