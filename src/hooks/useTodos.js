@@ -50,19 +50,24 @@ export function useTodos() {
     saveTodos(newTodos)
   }
 
-  return {
+  const states = {
     loading,
     error,
     totalTodos,
     completedTodos,
     searchItem,
-    setSearchItem,
     searchedTodos,
+    openModal,
+  }
+
+  const stateUpdaters = {
+    setSearchItem,
     addTodo,
     completeTodo,
     deleteTodo,
-    openModal,
     setOpenModal, 
     sincronizeTodos
   }
+
+  return {states, stateUpdaters}
 }
