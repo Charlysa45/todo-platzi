@@ -4,6 +4,7 @@ form {
     background: linear-gradient(270deg, rgba(255,255,255,1) 0%, rgba(206,250,255,1) 100%);
     border-radius: 25px;
     padding: 33px 40px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -1,11 +1,9 @@
 import "./CreateTodoButton.css"
 
-const CreateTodoButton = ({ setOpenModal }) => {
-  const onClickButton = () => {
-    setOpenModal((patata) => !patata)
-  }
+const CreateTodoButton = (props) => {
+  
   return (
-    <button className="CreateTodoButton" onClick={onClickButton}>
+    <button className="CreateTodoButton" onClick={props.onClick}>
       +
     </button>
   )

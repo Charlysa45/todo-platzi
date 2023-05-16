@@ -8,9 +8,9 @@ export function useTodos() {
     sincronizeItem: sincronizeTodos,
     loading,
     error
-  } = useLocalStorage("TODOS_V1", [])
+  } = useLocalStorage("TODOS_V2", [])
   const [searchItem, setSearchItem] = useState("")
-  const [openModal, setOpenModal] = useState(false)
+  // const [openModal, setOpenModal] = useState(false)
 
   const completedTodos = todos.filter((todos) => !!todos.completed).length
   const totalTodos = todos.length
@@ -28,23 +28,32 @@ export function useTodos() {
   }
 
   const addTodo = (text) => {
+    const id = newTodoId(todos)
     const newTodos = [...todos]
     newTodos.push({
       completed: false,
       text,
+      id
     })
     saveTodos(newTodos)
   }
 
-  const completeTodo = (text) => {
-    const todoIndex = todos.findIndex((todo) => todo.text === text)
+  const completeTodo = (id) => {
+    const todoIndex = todos.findIndex((todo) => todo.id === id)
     const newTodos = [...todos]
     newTodos[todoIndex].completed = true
     saveTodos(newTodos)
   }
 
-  const deleteTodo = (text) => {
-    const todoIndex = todos.findIndex((todo) => todo.text === text)
+  const editTodo = (id, newText) => {
+    const todoIndex = todos.findIndex((todo) => todo.id === id)
+    const newTodos = [...todos]
+    newTodos[todoIndex].text = newText
+    saveTodos(newTodos)
+  }
+
+  const deleteTodo = (id) => {
+    const todoIndex = todos.findIndex((todo) => todo.id === id)
     const newTodos = [...todos]
     newTodos.splice(todoIndex, 1)
     saveTodos(newTodos)
@@ -57,7 +66,7 @@ export function useTodos() {
     completedTodos,
     searchItem,
     searchedTodos,
-    openModal,
+    // openModal,
   }
 
   const stateUpdaters = {
@@ -65,9 +74,19 @@ export function useTodos() {
     addTodo,
     completeTodo,
     deleteTodo,
-    setOpenModal, 
+    editTodo,
+    // setOpenModal, 
     sincronizeTodos
   }
 
   return {states, stateUpdaters}
+}
+
+function newTodoId(todoList){
+  if (!todoList.length) {
+    return 1
+  }
+  const idList = todoList.map((todo) => todo.id)
+  const idMax = Math.max(...idList)
+  return idMax + 1
 }

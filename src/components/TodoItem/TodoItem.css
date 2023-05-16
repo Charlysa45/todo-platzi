@@ -40,11 +40,15 @@
     color: #4caf50;
   }
   
-  .Icon-delete{
+  .Icon-delete, .Icon-edit{
     margin-right: 2vw;
     font-size: 32px;
   }
   
+  .Icon-edit:hover{
+    color: orange
+  }
+
   .Icon-delete:hover {
     color: red;
   }
