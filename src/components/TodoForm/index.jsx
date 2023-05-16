@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { useState } from 'react'
 
-import "./TodoForm.css"
-import { useNavigate } from "react-router-dom"
+import './TodoForm.css'
+import { useNavigate } from 'react-router-dom'
 
 export const TodoForm = (props) => {
   const navigate = useNavigate()
-  const [newTodoValue, setNewTodoValue] = useState("")
+  const [newTodoValue, setNewTodoValue] = useState(props.defaultTodoText || '')
 
   const onCancel = () => {
     navigate('/')
